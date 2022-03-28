@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"__config": "cpp",
+		"termios.h": "c"
+	}
+}
