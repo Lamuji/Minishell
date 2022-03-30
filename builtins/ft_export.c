@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edalmis <edalmis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:10:31 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/29 15:24:56 by edalmis          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:23:30 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ char *new_content, char *var_dest)
 {
 	t_list	*temp;
 
-	if (verify_dquote(data->cmdline))
-	{
-		new_content = ft_strjoin("\"", new_content);
-		new_content = ft_strjoin(new_content, "\"");
-		manager(new_content, 0);
-	}
+	new_content = ft_strjoin("\"", new_content);
+	new_content = ft_strjoin(new_content, "\"");
+	manager(new_content, 0);
 	temp = *lst;
 	while (temp != NULL)
 	{
-		if (ft_strstr_int(temp->content, var_dest) != 0)
+		if (ft_ch_int(temp->content, var_dest) != 0)
 		{
 			temp->content = add_content_to_var(temp->content, new_content, 0);
 			break ;
@@ -120,10 +117,8 @@ void	exec_export(t_data *data, int i)
 	int	j;
 
 	j = 1;
-	if (!ft_strcmp(data->cmdline, "export"))
-	{
+	if ((ft_strlenarr(data->cmd->cmd) == 1) || data->cmd->nb_cmd > 1)
 		print_list(data->env, 1);
-	}
 	else
 	{
 		while (data->cmd->cmd[i])

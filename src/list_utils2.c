@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edalmis <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 13:18:11 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/26 13:18:16 by edalmis          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:46:14 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,4 @@ void	lstdelone_cmd(t_cmd *lst, void (*del)(void *))
 	if (del && lst)
 		(*del)(lst->cmd);
 	free(lst);
-}
-
-void	lstclear_env(t_data *data)
-{
-	t_list	*tmp;
-
-	while (data->env)
-	{
-		tmp = data->env->next;
-		free(data->env);
-		data->env = tmp;
-	}
 }

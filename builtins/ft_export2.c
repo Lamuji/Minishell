@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edalmis <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 13:21:18 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/26 13:21:19 by edalmis          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:23:30 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_if_arg_in_env(char *var_name, t_list *lst)
 	i = 0;
 	while (lst != NULL)
 	{
-		if (ft_strstr_int(lst->content, var_name) != 0)
+		if (ft_ch_int(lst->content, var_name) != 0)
 			return (i);
 		lst = lst->next;
 		i++;

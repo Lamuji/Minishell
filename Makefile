@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edalmis <edalmis@student.42.fr>            +#+  +:+       +#+         #
+#    By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/25 20:42:53 by edalmis           #+#    #+#              #
-#    Updated: 2022/03/28 15:20:54 by edalmis          ###   ########.fr        #
+#    Updated: 2022/03/31 00:40:02 by rfkaier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,8 @@ AR			:= ar -rcs
 
 SRCS		:= src/main.c \
 			utils/ft_util_libft.c \
-			utils/ft_util_libft2.c \
-			utils/ft_util_libft3.c \
-			utils/ft_util_libft4.c \
 			src/ft_exit.c \
 			src/ft_get_args.c \
-			src/ft_str_split.c \
 			src/parse.c \
 			src/parse2.c \
 			src/list_utils.c \

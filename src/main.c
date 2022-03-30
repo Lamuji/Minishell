@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edalmis <edalmis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:59:04 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/28 15:29:05 by edalmis          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:41:52 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+int	g_gb = 0;
 
 void	manager(void *ptr, int err)
 {

@@ -6,7 +6,7 @@
 /*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:46:42 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/25 15:58:23 by rfkaier          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:23:30 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	add_new(t_list **lst, char *new_content, char *var_dest)
 	temp = *lst;
 	while (temp != NULL)
 	{
-		if (ft_strstr_int(temp->content, var_dest) != 0)
+		if (ft_ch_int(temp->content, var_dest) != 0)
 		{
 			temp->content = add_content_to_var(temp->content, new_content, 0);
 			break ;

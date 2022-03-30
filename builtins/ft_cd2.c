@@ -6,17 +6,19 @@
 /*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:10:36 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/17 11:35:24 by rfkaier          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:23:30 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int	ft_strstr_int(char *str, char *to_find)
+int	ft_ch_int(char *str, char *to_find)
 {
 	int	i;
 
 	i = 0;
+	if (to_find == NULL || str == NULL)
+		return (0);
 	while (str[i] != '=' && str[i] != '\0')
 	{
 		if (str[i] == to_find[i])

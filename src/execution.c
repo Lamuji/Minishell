@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edalmis <edalmis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:03:31 by rfkaier           #+#    #+#             */
-/*   Updated: 2022/03/29 15:07:39 by edalmis          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:26:17 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,66 +43,50 @@ void	hound(t_cmd **cmd)
 
 int	child_process(t_data *data)
 {
-	pid_t	pid;
 	int		status;
+	int		i;
 
-	hound(&data->cmd);
-	pid = fork();
-	if (pid < 0)
+	i = -1;
+	check_path(data);
+	data->pid = fork();
+	if (data->pid < 0)
 	{
 		perror("minishell: fork");
 		return (0);
 	}
-	if (pid == 0)
+	if (data->pid == 0)
 	{
 		handle_pipes(data->cmd);
 		exec_cmd(data, data->envp);
 	}
-	wait(&status);
+	waitpid(data->pid, &status, 0);
 	return (1);
-}
-
-static int	line_echo(t_data *data)
-{
-	if (!ft_strcmp(data->cmd->cmd[0], "echo"))
-	{
-		ft_echo(data, 1);
-		return (1);
-	}
-	return (0);
 }
 
 int	launch_exec(t_data *data)
 {
 	signal(SIGINT, handler_exec);
 	signal(SIGQUIT, handler_exec);
-	while (data->cmd)
-	{		
-		if (!ft_strcmp(data->cmd->cmd[0], "cd"))
-			exec_cd(data, data->cmd->cmd[1]);
-		if (!ft_strcmp(data->cmd->cmd[0], "exit")
-			&& data->cmd->next == NULL && data->cmd->prev == NULL)
+	if (nb_cmd(*data) == 1 && is_builtins(data))
+		cmd_builtins(data);
+	else
+	{
+		while (data->cmd)
 		{
-			exit_exe();
-			return (1);
+			open_pipes(data->cmd);
+			if (!child_process(data))
+				return (0);
+			close_pipes(data->cmd);
+			data->cmd = data->cmd->next;
 		}
-		if (!pre_exec(data))
-		{	
-			if (!line_echo(data))
-			{
-				open_pipes(data->cmd);
-				if (!child_process(data))
-					return (0);
-				close_pipes(data->cmd);
-			}
-		}
-		data->cmd = data->cmd->next;
 	}
 	return (1);
 }
 
 int	execution(t_data *data)
 {
+	if (!ft_strcmp(data->cmd->cmd[0], "exit"))
+		exit_exe();
 	if (!launch_exec(data))
 		return (0);
 	return (1);

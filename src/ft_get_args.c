@@ -6,28 +6,11 @@
 /*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 14:49:20 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/16 16:58:49 by rfkaier          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:34:11 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
-
-int	ft_isemptystr(char *str, int consider_space)
-{
-	int		i;
-	int		min;
-	int		max;
-
-	i = -1;
-	min = 32 + consider_space;
-	max = 126;
-	while (str[++i])
-	{
-		if (str[i] >= min && str[i] <= max)
-			return (0);
-	}
-	return (1);
-}
 
 char	*ft_strcat(char *dest, char *src)
 {

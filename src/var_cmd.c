@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   var_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edalmis <edalmis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:19:16 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/28 15:45:34 by edalmis          ###   ########.fr       */
+/*   Updated: 2022/03/30 17:49:18 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+int	ft_strlenarr(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	nb_cmd(t_data data)
+{
+	int	i;
+
+	i = 0;
+	while (data.cmd)
+	{
+		i++;
+		data.cmd = data.cmd->next;
+	}
+	return (i);
+}
 
 void	var_cmd(t_data *data)
 {

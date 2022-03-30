@@ -6,7 +6,7 @@
 /*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:29:42 by rfkaier           #+#    #+#             */
-/*   Updated: 2022/03/25 14:59:56 by rfkaier          ###   ########.fr       */
+/*   Updated: 2022/03/30 22:12:28 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	set_cmd(t_token *tk, t_cmd **cmd, int pipes)
 	tmp->nb_cmd = pipes + 1;
 	tmp->in = STDIN_FILENO;
 	tmp->out = STDOUT_FILENO;
+	tmp->exit = 0;
 	addback_cmd(cmd, tmp);
 }
 

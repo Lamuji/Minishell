@@ -6,7 +6,7 @@
 /*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:27:04 by rfkaier           #+#    #+#             */
-/*   Updated: 2022/03/25 18:40:47 by rfkaier          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:42:25 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,6 @@ void	lstclear_tk(t_token **token)
 		free(*token);
 		(*token) = tmp;
 	}
-}
-
-void	lstclear_cmd(t_cmd **cmd)
-{
-	t_cmd	*tmp;
-
-	while (*cmd)
-	{
-		tmp = (*cmd)->next;
-		ft_freestrarr((*cmd)->cmd);
-		free(*cmd);
-		(*cmd) = tmp;
-	}
-}
-
-void	free_line(t_data *data)
-{
-	if (data->cmdline)
-		free(data->cmdline);
-	if (data->token)
-		lstclear_tk(&data->token);
-	if (data->cmd)
-		lstclear_cmd(&data->cmd);
 }
 
 t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert)

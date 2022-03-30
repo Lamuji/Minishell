@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edalmis <edalmis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfkaier <rfkaier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:53:59 by edalmis           #+#    #+#             */
-/*   Updated: 2022/03/29 14:28:50 by edalmis          ###   ########.fr       */
+/*   Updated: 2022/03/31 00:46:33 by rfkaier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define FAILURE 1
 # define PROMPT "💻\033[1;37m ~ Minishell : \033[0m"
 
+extern int	g_gb;
 typedef struct s_cmd
 {
 	char			**cmd;
@@ -45,6 +46,7 @@ typedef struct s_cmd
 	int				pos;
 	int				in;
 	int				out;
+	int				exit;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }				t_cmd;
@@ -67,6 +69,8 @@ typedef struct s_token
 
 typedef struct s_data
 {
+	int		i;
+	int		j;
 	int		x_i;
 	int		x_j;
 	char	*rstr;
@@ -74,16 +78,15 @@ typedef struct s_data
 	int		t_state;
 	int		t_start;
 	int		t_type;
-	int		nb_cmd;
 	char	**envp;
 	char	*cmdline;
 	char	*path;
-	char	**cmd_lines;
 	t_token	*token;
 	char	**cmd_tab;
 	t_cmd	*cmd;
 	t_list	*env;
 	t_list	*cenv;
+	pid_t	pid;
 }				t_data;
 
 enum e_tk_types {
@@ -104,6 +107,11 @@ enum e_states {
 	DOUBLE
 };
 
+int		ft_strlenarr(char **str);
+t_list	*free_at(t_list **lst, int pos, int i);
+int		delete_var(t_data *data, char *str, int j, int i);
+void	check_path(t_data *data);
+int		nb_cmd(t_data data);
 int		redir_dekita(t_token *tk);
 void	norme(t_data *data, int ac, char **av, char **env);
 void	var_cmd(t_data *data);
@@ -159,7 +167,6 @@ int		launch_exec(t_data *data);
 int		child_process(t_data *data);
 void	exec_cmd(t_data *data, char **env);
 void	exit_exe(void);
-void	not_found(t_data *data);
 
 char	*identify_variable(char *str);
 int		is_var_compliant(char c);
@@ -172,8 +179,8 @@ int		if_quotes(char *str);
 int		handle_quotes(t_data *data);
 int		tokenize_var(t_data *data);
 int		remove_quotes(t_token **tk_node);
-
 int		tokenizer(t_data *data, char *cmdline);
+
 int		nb_pipes(t_token *tk);
 void	set_cmd(t_token *tk, t_cmd **cmd, int pipes);
 t_cmd	*get_cmds(t_token **tk);
@@ -194,47 +201,15 @@ t_token	*lstnew_tk(char *str, int type, int state);
 void	lst_add_back_tk(t_token **alst, t_token *new_node);
 void	lstdelone_tk(t_token *lst, void (*del)(void *));
 void	lstclear_tk(t_token **lst);
-void	lstclear_cmd(t_cmd **cmd);
-void	lstclear_env(t_data *data);
 t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert);
 void	creat_cell(t_list **cell, char *str);
-t_list	*empty_list(void);
 
-int		init_env_file(void);
-char	*ft_search_env_value(char *var, char *name);
-int		ft_is_name_env_arr(char *name, char **env);
-void	set_nbcmd_envfile(t_cmd *cmd);
-void	increment_shlvl(char ***env);
-void	set_exitstatus(int status);
-char	*ft_getenv_arr(char *name, char **envp);
-char	**ft_get_new_env_content(char *name, char *value);
-char	*get_env_var(char *name);
-int		get_exitstatus(void);
-char	*ft_before_c(char *s, int c);
-int		ft_delete_env_content(char *name, char ***env);
-int		ft_unsetenv(char *name, char ***env);
 int		exception(t_token **tk_list);
-void	free_line(t_data *data);
 int		check_ops_rule(t_token **tk_list);
-char	*create_prompt(void);
 char	*ft_strnew(size_t size);
-char	*ft_strjoinch(char const *s1, char c);
-int		ft_strstartswith(char *s1, char *s2);
-char	*ft_pathjoin(char *p1, char *p2);
 char	*ft_strjoincl(char *s1, char *s2, int free_both);
-void	*ft_memalloc(size_t size);
 void	ft_freestrarr(char **arr);
 void	exit_shell(void);
-int		ft_strendswith(char *s1, char *s2);
-void	ft_line_init(t_line *line);
-int		ft_isemptystr(char *str, int consider_space);
-char	**ft_strsplit(char const *s, char c);
-int		ft_countwords(char const *str, char c);
-char	*ft_realloc(char *s1, char *s2);
-int		execute_commands(char **commands);
-char	**ft_strsplitall(char const *s);
-int		ft_countwords(char const *str, char c);
-int		ft_countwordsall(char const *str);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcat(char *dest, char *src);
 char	*ft_concat(char *s1, char *s2);
@@ -242,12 +217,11 @@ char	*ft_concat(char *s1, char *s2);
 char	*ft_str_chr(const char *str, int c);
 int		ft_strchr_env(char *str, char *to_find);
 char	*ft_strstr(char *str, char *to_find);
-int		ft_strstr_int(char *str, char *to_find);
+int		ft_ch_int(char *str, char *to_find);
 char	*act2(char *new_dest_content, char *content_to_add, int i);
 char	*act(char *dest, char *new_dest_content, char *content_to_add, int i);
 char	*ft_getenv(char *env, t_data *data, int i);
 t_list	*add_at(t_list *lst, char *str, int pos, int i);
 int		count_equals(char *str);
-int		is_space(char x);
 
 #endif
